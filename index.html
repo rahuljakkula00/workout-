@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitGuide — Beginner Gym Planner</title>
+  <meta name="description" content="Beginner-friendly gym, calorie, diet and expense planner.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#dashboard"><span>FG</span> FitGuide</a>
+    <nav>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#workouts">Workouts</a>
+      <a href="#diet">Diet</a>
+      <a href="#progress">Progress</a>
+      <a href="#assistant">AI Help</a>
+    </nav>
+    <button id="resetBtn" class="ghost small">Reset</button>
+  </header>
+
+  <main>
+    <section class="hero" id="dashboard">
+      <div>
+        <p class="eyebrow">BEGINNER FITNESS PLANNER</p>
+        <h1>Your simple path to a healthier routine.</h1>
+        <p class="hero-text">Enter your details once. FitGuide estimates daily calories, suggests a beginner workout, builds a simple diet plan, tracks exercise and estimates monthly expenses.</p>
+        <div class="hero-actions">
+          <a href="#profile" class="btn primary">Create my plan</a>
+          <a href="#workouts" class="btn secondary">Explore exercises</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-icon">🏋️</div>
+        <h3>Beginner first</h3>
+        <p>No complicated jargon. Start small, learn form, track consistency.</p>
+        <div class="mini-stats">
+          <div><strong id="heroWeight">—</strong><span>kg</span></div>
+          <div><strong id="heroTarget">—</strong><span>kcal/day</span></div>
+          <div><strong id="heroBurn">—</strong><span>burn/day</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="profile" class="section">
+      <div class="section-heading">
+        <div><p class="eyebrow">STEP 1</p><h2>Your profile</h2></div>
+        <p>Used only in this browser unless you connect your own backend.</p>
+      </div>
+      <form id="profileForm" class="form-grid card">
+        <label>Name <input id="name" type="text" placeholder="Your name" required></label>
+        <label>Age <input id="age" type="number" min="13" max="100" value="20" required></label>
+        <label>Sex
+          <select id="sex">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </label>
+        <label>Height (cm) <input id="height" type="number" min="120" max="230" value="170" required></label>
+        <label>Weight (kg) <input id="weight" type="number" min="30" max="250" step="0.1" value="70" required></label>
+        <label>Goal
+          <select id="goal">
+            <option value="lose">Fat loss</option>
+            <option value="maintain">Maintain weight</option>
+            <option value="gain">Muscle/weight gain</option>
+          </select>
+        </label>
+        <label>Activity level
+          <select id="activity">
+            <option value="1.2">Mostly sitting</option>
+            <option value="1.375">Lightly active</option>
+            <option value="1.55" selected>Moderately active</option>
+            <option value="1.725">Very active</option>
+          </select>
+        </label>
+        <label>Workout days/week
+          <select id="days">
+            <option>3</option><option selected>4</option><option>5</option><option>6</option>
+          </select>
+        </label>
+        <label>Gym fee/month (₹) <input id="gymFee" type="number" min="0" value="1000"></label>
+        <label>Food budget/month (₹) <input id="foodBudget" type="number" min="0" value="6000"></label>
+        <label>Other fitness costs/month (₹) <input id="otherCost" type="number" min="0" value="500"></label>
+        <div class="full form-actions"><button class="btn primary" type="submit">Generate my plan</button><span id="formMessage" class="muted"></span></div>
+      </form>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="section-heading">
+        <div><p class="eyebrow">YOUR NUMBERS</p><h2>Daily targets</h2></div>
+      </div>
+      <div class="stats-grid">
+        <article class="stat card"><span>BMI</span><strong id="bmi">—</strong><small id="bmiLabel">Enter profile</small></article>
+        <article class="stat card"><span>Estimated maintenance</span><strong id="tdee">—</strong><small>kcal/day</small></article>
+        <article class="stat card"><span>Suggested intake</span><strong id="targetCalories">—</strong><small>kcal/day</small></article>
+        <article class="stat card"><span>Exercise burn target</span><strong id="burnTarget">—</strong><small>kcal/day average</small></article>
+        <article class="stat card"><span>Monthly estimate</span><strong id="monthlyCost">—</strong><small>₹ / month</small></article>
+      </div>
+      <div class="callout"><strong>How to use the calorie target:</strong> Food intake and exercise are separate levers. The estimate is a starting point, not a medical prescription. Recheck your weight and energy over several weeks and adjust gradually.</div>
+    </section>
+
+    <section id="workouts" class="section">
+      <div class="section-heading">
+        <div><p class="eyebrow">STEP 2</p><h2>Beginner workout plan</h2></div>
+        <p id="workoutSummary">Generate your profile to personalize this.</p>
+      </div>
+      <div id="workoutPlan" class="workout-grid"></div>
+      <h3 class="subheading">Exercise library</h3>
+      <div id="exerciseLibrary" class="exercise-grid"></div>
+    </section>
+
+    <section id="diet" class="section">
+      <div class="section-heading">
+        <div><p class="eyebrow">STEP 3</p><h2>Simple diet plan</h2></div>
+        <p>Flexible food examples; swap foods you already enjoy.</p>
+      </div>
+      <div id="dietPlan" class="diet-grid"></div>
+      <div class="callout warning">If you have a medical condition, are under 18, are pregnant, have a history of an eating disorder, or need a therapeutic diet, use a qualified healthcare professional/dietitian for individualized advice.</div>
+    </section>
+
+    <section id="expense" class="section">
+      <div class="section-heading"><div><p class="eyebrow">BUDGET</p><h2>Monthly expense planner</h2></div></div>
+      <div class="expense-card card">
+        <div><span>Gym</span><strong id="expenseGym">₹0</strong></div>
+        <div><span>Food</span><strong id="expenseFood">₹0</strong></div>
+        <div><span>Other</span><strong id="expenseOther">₹0</strong></div>
+        <div class="total"><span>Estimated monthly total</span><strong id="expenseTotal">₹0</strong></div>
+      </div>
+      <p class="muted">Edit the three budget fields in your profile. Food cost is a budget input, not a claim that a specific diet costs that amount.</p>
+    </section>
+
+    <section id="progress" class="section">
+      <div class="section-heading">
+        <div><p class="eyebrow">STEP 4</p><h2>Track your day</h2></div>
+        <p>Your entries are stored in this browser.</p>
+      </div>
+      <form id="logForm" class="log-form card">
+        <label>Date <input id="logDate" type="date" required></label>
+        <label>Weight (kg) <input id="logWeight" type="number" step="0.1" min="20" max="300" required></label>
+        <label>Exercise minutes <input id="exerciseMinutes" type="number" min="0" max="600" value="30" required></label>
+        <label>Calories burned <input id="caloriesBurned" type="number" min="0" max="5000" value="200" required></label>
+        <label>Calories eaten <input id="caloriesEaten" type="number" min="0" max="10000" value="2000"></label>
+        <label>Water (L) <input id="water" type="number" step="0.1" min="0" max="20" value="2"></label>
+        <label class="check"><input id="workoutDone" type="checkbox"> Workout completed</label>
+        <div class="full"><button class="btn primary" type="submit">Save today's log</button></div>
+      </form>
+      <div class="progress-summary">
+        <div class="card"><span>Days logged</span><strong id="daysLogged">0</strong></div>
+        <div class="card"><span>Total exercise minutes</span><strong id="totalMinutes">0</strong></div>
+        <div class="card"><span>Total calories burned</span><strong id="totalBurned">0</strong></div>
+        <div class="card"><span>Latest weight</span><strong id="latestWeight">—</strong></div>
+      </div>
+      <div class="table-wrap card">
+        <table><thead><tr><th>Date</th><th>Weight</th><th>Exercise</th><th>Burned</th><th>Eaten</th><th>Workout</th></tr></thead>
+        <tbody id="logTable"></tbody></table>
+      </div>
+    </section>
+
+    <section id="assistant" class="section">
+      <div class="section-heading">
+        <div><p class="eyebrow">STEP 5</p><h2>Ask for help</h2></div>
+        <p>Two options: an offline beginner helper or Meta AI in a new tab.</p>
+      </div>
+      <div class="ai-layout">
+        <div class="chat card">
+          <div id="chatMessages" class="messages">
+            <div class="message bot">Hi! Ask me things like “How do I do a squat?”, “What should a beginner eat?” or “How much should I exercise?”</div>
+          </div>
+          <form id="chatForm" class="chat-input"><input id="chatText" placeholder="Type your fitness question..." autocomplete="off"><button class="btn primary">Ask</button></form>
+        </div>
+        <div class="card ai-card">
+          <div class="ai-logo">∞</div>
+          <h3>Meta AI</h3>
+          <p>Open Meta AI for general questions and conversation. A direct API integration should be done through a secure server, not by putting a secret key in this public GitHub Pages site.</p>
+          <a class="btn secondary" href="https://www.meta.ai/" target="_blank" rel="noopener">Open Meta AI ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>FitGuide</strong> · Educational fitness planner · Not medical advice
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
